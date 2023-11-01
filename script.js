@@ -3,13 +3,22 @@ let ncanvas_btn = document.querySelector("input[value=New]");
 let gradual_btn = document.querySelector("input[value=Gradual]");
 let colorful_btn = document.querySelector("input[value=Colorful]");
 let isColorful = false;
+let isGradual = false;
 
 gradual_btn.addEventListener("click", e => {
     e.target.classList.toggle("activated");
+    color_selector.value = "#000000";
+    isGradual = !isGradual;
+
+    isColorful = false;
+    colorful_btn.classList.remove("activated");
 }) 
 colorful_btn.addEventListener("click", e => {
     e.target.classList.toggle("activated");
     isColorful = !isColorful;
+
+    isGradual = false;
+    gradual_btn.classList.remove("activated");
 }) 
 ncanvas_btn.addEventListener("click", () => 
 addTilesEvents(generateGrid())
@@ -29,7 +38,15 @@ document.body.onmouseup = function() {
 }
 
 //add diff events in each tiles.
-
+color_selector.addEventListener("click",() => {
+    if(isGradual){
+        isGradual = false;
+        gradual_btn.classList.remove("activated");
+    }else if (isColorful){
+        isColorful = false;
+        colorful_btn.classList.remove("activated");
+    }
+})
 
 
 function generateGrid() {
@@ -67,11 +84,13 @@ function generateGrid() {
     return tiles;
 }
 
-function paint(e) {
+function paintGradual(e) {
+    let tileColor = getComputedStyle(e.target).backgroundColor;
+    console.log(typeof tileColor);
     
 }
 
-function paintRandom(e){
+function paintColorful(e){
     let randomValue = () => (Math.floor(Math.random() * 255) + 1).toString(16);
     let r = randomValue();
     let g = randomValue();
@@ -82,8 +101,10 @@ function paintRandom(e){
 function addTilesEvents(tiles) {
     tiles.forEach(n => {
         n.addEventListener("mousedown", (e) => {
-            if (e.button == 0 && isColorful){
-                paintRandom(e);
+            if (e.button == 0 && isGradual){
+                paintGradual(e);
+            }else if (e.button == 0 && isColorful){
+                paintColorful(e);
             }
             else if(e.button == 0) {
                 e.target.style.backgroundColor = color_selector.value;
@@ -94,8 +115,10 @@ function addTilesEvents(tiles) {
         });
     
         n.addEventListener("mouseover", e => {
-            if(mouseDown == 1 && isColorful) {
-                paintRandom(e);
+            if (mouseDown == 1 && isGradual){
+                paintGradual(e);
+            }else if(mouseDown == 1 && isColorful) {
+                paintColorful(e);
             }else if(mouseDown == 1) {
                e.target.style.backgroundColor = color_selector.value;
             }else if (mouseDown == 2) {
