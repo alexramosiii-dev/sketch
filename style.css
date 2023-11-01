@@ -43,7 +43,7 @@ main .canvas {
     height: 82.394%;
     border: 3px black solid;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: rgb(189, 189, 189);
 }
 
 main .ctrls {
@@ -61,6 +61,10 @@ main .ctrls {
     height: 50px;
     font-size: 1rem;
     font-weight: 700;
+}
+
+.ctrls input:hover {
+    background-color: grey;
 }
 
 .ctrls input[type=color] {
@@ -81,4 +85,14 @@ main .ctrls {
 .tile:hover {
     border: 1px grey solid;
     box-sizing: border-box;
+}
+
+.ctrls input:active {
+    background-color: grey;
+    border: 2px gold solid;
+}
+
+.ctrls .activated {
+    background-color: grey;
+    border: 2px gold solid;
 }
